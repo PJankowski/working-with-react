@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router'
 import { connect } from 'react-redux'
 
 import { fetchPosts, addPost } from '../actions/postsActions'
@@ -10,13 +11,18 @@ import PostList from '../components/postList'
 
 @connect((store) => {
   return {
-    posts: store.posts.posts
+    posts: store.posts.posts,
+    user: store.user
   }
 })
 
 export default class Layout extends React.Component {
   componentWillMount() {
-    this.props.dispatch(fetchPosts())
+    if (this.props.user.user.username && this.props.user.email) {
+      this.props.dispatch(fetchPosts())
+    } else {
+      return
+    }
   }
 
   fetchPosts() {
@@ -30,12 +36,9 @@ export default class Layout extends React.Component {
   render() {
     const posts = this.props.posts
 
-    if (!posts.length) {
+    if (!this.props.user.user.username && !this.props.user.email) {
       return (
-        <main>
-          <Header />
-          <button onClick={this.fetchPosts.bind(this)}>Fetch Posts</button>
-        </main>
+        <p>You need to be logged in! <Link to="/login">Please Login.</Link></p>
       )
     }
 

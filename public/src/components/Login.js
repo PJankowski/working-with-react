@@ -1,11 +1,9 @@
 import React from 'react'
-import { Link } from 'react-router'
-
-import { registerUser } from '../actions/UserActions'
+import { browserHistory, Link } from 'react-router'
 
 var errors = []
 
-export default class Register extends React.Component {
+export default class Login extends React.Component {
   constructor() {
     super()
 
@@ -14,7 +12,7 @@ export default class Register extends React.Component {
     }
   }
 
-  register(e) {
+  login(e) {
     e.preventDefault()
     this.setState({
       errors: []
@@ -26,10 +24,6 @@ export default class Register extends React.Component {
       errors.push("An email is required")
     }
 
-    if (this.refs.username.value === "") {
-      errors.push("A username is required")
-    }
-
     if (this.refs.password.value === "") {
       errors.push("A password is required")
     }
@@ -38,23 +32,21 @@ export default class Register extends React.Component {
       this.setState({errors: errors})
       return
     } else {
-      // this.props.history.push("/app")
-      registerUser()
+      this.props.history.push('/app')
     }
   }
 
   render() {
     return (
-      <form style={formStyles} onSubmit={this.register.bind(this)}>
+      <form style={formStyles} onSubmit={this.login.bind(this)}>
         <h2 style={headingStyles}>Welcome to PhotoGram</h2>
         <p style={paragraphStyles}>Please register to continue.</p>
         <input style={inputStyles} type="email" ref="email" placeholder="Email" />
-        <input style={inputStyles} type="text" ref="username" placeholder="Username" />
         <input style={inputStyles} type="password" ref="password" placeholder="Password" />
         <button style={buttonStyles}>Register</button>
-        <Link to="/login">Or Login.</Link>
+        <Link to="/">Or Register.</Link>
         { this.state.errors.length > 0 ? <div>
-          { this.state.errors.map((err) => <span style={errorStyles}>{ err }</span>) }
+          { this.state.errors.map((err, i) => <span key={i} style={errorStyles}>{ err }</span>) }
         </div> : null }
       </form>
     )
