@@ -1,8 +1,10 @@
 import axios from 'axios'
 
-export function registerUser() {
+export function registerUser(user) {
+  console.log(user)
   return function(dispatch) {
-    axios.post('/api/user/register')
+
+    axios.post('/api/user/register', user)
       .then((response) => {
         dispatch({type: "REGISTER_USER_FULFILLED", payload: response.data})
       })

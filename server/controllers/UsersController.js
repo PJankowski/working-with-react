@@ -1,3 +1,3 @@
 exports.register = function(req, res) {
-  console.log('Made it');
+  console.log(req.body);
 };

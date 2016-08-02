@@ -6,7 +6,7 @@ var express = require('express'),
 
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true}));
-// app.use(bodyParser.json());
+app.use(bodyParser.json());
 app.use(express.static(__dirname + '/public'));
 
 mongoose.connect('mongodb://localhost/photogram', function(err){

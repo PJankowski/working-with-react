@@ -1,9 +1,17 @@
 import React from 'react'
 import { Link } from 'react-router'
 
+import { connect } from 'react-redux'
+
 import { registerUser } from '../actions/UserActions'
 
 var errors = []
+
+@connect((store) => {
+  return {
+    user: store.user
+  }
+})
 
 export default class Register extends React.Component {
   constructor() {
@@ -38,8 +46,13 @@ export default class Register extends React.Component {
       this.setState({errors: errors})
       return
     } else {
+      var newUser = {
+        email: this.refs.email.value,
+        username: this.refs.username.value,
+        password: this.refs.password.value
+      }
       // this.props.history.push("/app")
-      registerUser()
+      this.props.dispatch(registerUser(newUser))
     }
   }
 
@@ -86,7 +99,8 @@ var buttonStyles = {
   border: "none",
   cursor: "pointer",
   outline: "none",
-  marginBottom: "10px"
+  marginBottom: "10px",
+  marginRight: "10px"
 }
 
 var errorStyles = {

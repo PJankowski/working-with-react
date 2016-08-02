@@ -14,8 +14,6 @@ export function fetchPosts() {
 
 export function addPost(post) {
   return function(dispatch) {
-    console.log(post)
-
     var data = new FormData()
     data.append('postName', post.postName)
     data.append('image', post.image)
